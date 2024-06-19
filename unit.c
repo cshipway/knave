@@ -2,14 +2,18 @@
 #include <string.h>
 #include "unit.h"
 
-void AddNewUnit(UnitList *units, char icon, const char *name, int x, int y)
+void AddNewUnit(UnitList *units, char icon, char *name, int x, int y)
 {
 	printf("%s added!\n", name);
-	int unitCount = units->count;
-	Unit unit = {icon, "", {x, y}, 10, 10, 1, 1};
-	strcpy(unit.name, name);
-	units->list[unitCount] = unit;
+	Unit unit = {
+		.icon = icon,
+		.name = *name,
+		.position = (Position){x, y}
+	};
+	
+	units->list[units->count] = unit;
 	units->count++;
+	printf("%i", units->count);
 }
 
 void PrintUnitStatus(Unit *u)

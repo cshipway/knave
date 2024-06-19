@@ -21,5 +21,5 @@ typedef struct UnitList
 	Unit list[64];
 } UnitList;
 
-void AddNewUnit(UnitList *units, char icon, const char *name, int x, int y);
+void AddNewUnit(UnitList *units, char icon, char *name, int x, int y);
 void PrintUnitStatus(Unit *u);

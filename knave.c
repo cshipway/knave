@@ -1,34 +1,37 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "unit.h"
 
-void DrawRoom(UnitList units)
+void DrawRoom(UnitList *units)
 {
+	printf("Drawing room...\n");
 	for(int y = 0; y < 10; y++)
 	{
-		char line[10];
 		for(int x = 0; x < 10; x++)
 		{
 			int isSpaceEmpty = 1;
 			
 			//Check if any units inhabit this space.
-			for(int i = 0; i < units.count; i++)
+			for(int i = 0; i < units->count; i++)
 			{
-				Unit u = units.list[i];
+				Unit u = units->list[i];
 				if(u.position.x == x && u.position.y == y)
 				{
-					line[x] = u.icon;
+					printf("%c", u.icon);
 					isSpaceEmpty = 0;
+					break;
 				}
 			}
 			//If space is empty, space is blank.
 			if(isSpaceEmpty)
-				line[x] = '.';
+				printf(".");
 		}
-		printf("%s\n", line);
+		printf("\n");
 	}
-	
-	for(int i = 0; i < units.count; i++)
-		PrintUnitStatus(&units.list[i]);
+
+	int unitCount = units->count;
+	for(int i = 0; i < units->count; i++)
+		PrintUnitStatus(&units->list[i]);
 }
 
 int main()
@@ -37,7 +40,7 @@ int main()
     printf("Welcome to Knave!\n");
 	
 	//Create some starting units.
-	UnitList units;
+	UnitList units = {0};
 	AddNewUnit(&units, 'H', "Hero", 1, 1);
 	AddNewUnit(&units, 'G', "Goblin", 2, 2);
 	AddNewUnit(&units, 'S', "Slime", 3, 3);
@@ -48,7 +51,7 @@ int main()
 	{
 		turnCounter++;
 		printf("\n\n\n%i-------------------------\n", turnCounter);
-		DrawRoom(units);
+		DrawRoom(&units);
 		printf("> ");
 		char input[256];
 		fgets(input, sizeof(input), stdin);
