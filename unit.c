@@ -20,3 +20,5 @@ void PrintUnitStatus(Unit *u)
 {
 	printf("[%c] %s is at (%i,%i).\n", u->icon, u->name, u->position.x, u->position.y);
 }
+
+//123
