@@ -4,6 +4,27 @@ typedef struct Position
 	int y;
 } Position;
 
+typedef struct Item {
+	char icon;
+	char name[16];
+	char description[64];
+	int hp;
+	int atk;
+	int def;
+	int cost;
+} Item;
+
+typedef struct ItemList {
+	int count;
+	Item list[8];
+} ItemList;
+
+typedef struct Keywords {
+	int inanimate : 1;
+	int inorganic : 1;
+	int friendly : 1;
+} Keywords;
+
 typedef struct Unit
 {
 	char icon;
@@ -13,6 +34,9 @@ typedef struct Unit
 	int maxHp;
 	int atk;
 	int def;
+	ItemList items;
+	int gold;
+	Keywords keywords;
 } Unit;
 
 typedef struct UnitList
@@ -21,5 +45,11 @@ typedef struct UnitList
 	Unit list[64];
 } UnitList;
 
-void AddNewUnit(UnitList *units, char icon, char *name, int x, int y);
+Unit * AddNewUnit(UnitList *units, char icon, char *name, int x, int y, int hp, int atk, int def);
+Unit * AddNewInanimateUnit(UnitList *units, char icon, char *name, int x, int y, int htp, int atk, int def);
+Unit * AddNewFriendlyUnit(UnitList *units, char icon, char *name, int x, int y, int htp, int atk, int def);
+void UnitAttackUnit(Unit *attacker, Unit *defender);
+void UnitInteractWithUnit(Unit *u, Unit *interacted);
+void UnitTakeItem(Unit *u, Item item);
+void UnitTakeGold(Unit *u, int gold);
 void PrintUnitStatus(Unit *u);
